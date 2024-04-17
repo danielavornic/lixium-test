@@ -15,7 +15,7 @@ export const Sidebar = () => {
   const { pathname } = useRouter();
 
   return (
-    <aside className="flex w-16 flex-col items-center justify-between bg-slate-950 py-4 text-white lg:w-[250px] lg:items-start">
+    <aside className="flex h-screen w-16 flex-col items-center justify-between bg-zinc-950 py-4 text-white lg:w-[250px] lg:items-start">
       <div className="flex w-full flex-col items-center lg:items-start lg:px-2">
         <Link href="/">
           <img src="/logo.svg" alt="Logo" className="h-8 w-8 lg:ml-3" />
@@ -27,7 +27,7 @@ export const Sidebar = () => {
               key={href}
               href={href}
               className={clsx(
-                "flex items-center rounded-full p-3 text-sm transition-all hover:bg-slate-700 lg:space-x-4 lg:pr-8",
+                "flex items-center rounded-full p-3 text-sm transition-all hover:bg-zinc-700 lg:space-x-4 lg:pr-8",
                 {
                   "text-white": pathname === href,
                   "text-gray-200": pathname !== href
@@ -47,14 +47,14 @@ export const Sidebar = () => {
         </nav>
 
         <div className="mt-8 w-full px-2">
-          <Button href="/tweet/create" size="lg" fullWidth className="px-0">
+          <Button href="/tweet/create" size="lg" fullWidth className="w-12 !px-0 lg:w-auto">
             <FiFeather size={24} className="lg:hidden" />
             <span className="ml-2 hidden lg:block">Tweet</span>
           </Button>
         </div>
       </div>
 
-      <div className="flex cursor-default items-center rounded-full p-3 transition-all hover:bg-slate-700 lg:w-full lg:space-x-4">
+      <div className="flex cursor-default items-center rounded-full p-3 transition-all hover:bg-zinc-700 lg:w-full lg:space-x-4">
         <img src="/images/pfp.jpg" alt="Profile" className="block h-10 w-10 rounded-full" />
         <div className="hidden lg:block">
           <p className="text-lg font-semibold">oomf</p>
