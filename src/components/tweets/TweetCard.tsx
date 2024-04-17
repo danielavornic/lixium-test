@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
@@ -9,33 +10,41 @@ import { Tweet } from "@/types";
 import { formatTweetTime } from "@/utils";
 
 export const TweetCard = ({ tweet }: { tweet: Tweet }) => {
-  const { author, createdAt, content } = tweet;
+  const { author, createdAt, updatedAt, content } = tweet;
+  const isEdited = createdAt !== updatedAt;
 
+  const router = useRouter();
   const queryClient = useQueryClient();
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const { mutate: deleteTweet } = useMutation({
     mutationFn: () => tweetsApi.deleteTweet(tweet.id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tweets"] });
-    }
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["tweets"] })
   });
+
+  const handleEdit = () => {
+    setIsPopoverOpen(false);
+    router.push(`/?editTweet=${tweet.id}`);
+  };
+
+  const handleDelete = () => {
+    setIsPopoverOpen(false);
+    const isConfirmed = window.confirm("Are you sure you want to delete this tweet?");
+    if (isConfirmed) {
+      deleteTweet();
+    }
+  };
 
   const tweetActions = [
     {
       label: "Edit",
-      onClick: () => {}
+      onClick: handleEdit
     },
     {
       label: "Delete",
       className: "text-red-500",
-      onClick: () => {
-        const isConfirmed = window.confirm("Are you sure you want to delete this tweet?");
-        if (isConfirmed) {
-          deleteTweet();
-        }
-      }
+      onClick: handleDelete
     }
   ];
 
@@ -57,7 +66,10 @@ export const TweetCard = ({ tweet }: { tweet: Tweet }) => {
         <div className="flex justify-between">
           <div className="flex flex-wrap items-center">
             <p className="text-sm font-semibold">{author}</p>
-            <p className="text-xs text-gray-400">・{formatTweetTime(createdAt)}</p>
+            <p className="text-xs text-gray-400">
+              ・{formatTweetTime(updatedAt)}
+              {isEdited && <span className="text-xs text-gray-400"> (edited)</span>}
+            </p>
           </div>
 
           <button
