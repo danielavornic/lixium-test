@@ -15,7 +15,7 @@ export const Sidebar = () => {
   const { pathname } = useRouter();
 
   return (
-    <aside className="flex h-screen w-16 flex-col items-center justify-between bg-zinc-950 py-4 text-white lg:w-[250px] lg:items-start">
+    <aside className="fixed top-0 flex h-screen w-16 flex-col items-center justify-between bg-zinc-950 py-4 text-white lg:w-[250px] lg:items-start">
       <div className="flex w-full flex-col items-center lg:items-start lg:px-2">
         <Link href="/">
           <img src="/logo.svg" alt="Logo" className="h-8 w-8 lg:ml-3" />
@@ -47,7 +47,7 @@ export const Sidebar = () => {
         </nav>
 
         <div className="mt-8 w-full px-2">
-          <Button href="/tweet/create" size="lg" fullWidth className="w-12 !px-0 lg:w-auto">
+          <Button href="/?createTweet=true" size="lg" fullWidth className="w-12 !px-0 lg:w-auto">
             <FiFeather size={24} className="lg:hidden" />
             <span className="ml-2 hidden lg:block">Tweet</span>
           </Button>

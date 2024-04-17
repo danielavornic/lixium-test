@@ -13,13 +13,11 @@ export default function Home() {
 
   return (
     <Layout title="Home">
-      <main className="w-full py-4 pl-10">
-        <h1 className="text-2xl font-bold">Home</h1>
+      <h1 className="text-2xl font-bold">Home</h1>
 
-        <section className="mt-8 space-y-4">
-          {data?.map((tweet: Tweet) => <TweetCard key={tweet.id} tweet={tweet} />)}
-        </section>
-      </main>
+      <section className="mt-8 space-y-4">
+        {data?.map((tweet: Tweet) => <TweetCard key={tweet.id} tweet={tweet} />)}
+      </section>
     </Layout>
   );
 }
