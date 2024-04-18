@@ -1,9 +1,10 @@
 import { axios } from "@/lib";
+import { Tweet } from "@/types";
 
 export const tweetsApi = {
   getTweets: async () => {
     const { data } = await axios.get("/tweets");
-    return data;
+    return data.sort((a: Tweet, b: Tweet) => (a.updatedAt > b.updatedAt ? -1 : 1));
   },
   getTweet: async (id: string) => {
     const { data } = await axios.get(`/tweets/${id}`);
