@@ -99,6 +99,7 @@ export const TweetCard = ({ tweet }: { tweet: Tweet }) => {
           <div ref={cardRef}>
             <button
               onClick={toggleMenu}
+              aria-label="Tweet actions"
               className="rouned-full group flex h-8 min-w-8 items-center justify-center rounded-full transition-all hover:bg-blue-400 hover:bg-opacity-20"
             >
               <BsThreeDots size={20} className="transition-all group-hover:text-blue-500" />

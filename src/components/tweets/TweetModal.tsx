@@ -109,16 +109,20 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
         className="relative z-20 mx-auto h-screen w-full bg-zinc-950 px-4 md:mt-[4%] md:h-auto md:max-h-[80vh] md:min-h-[300px] md:max-w-[600px] md:rounded-xl md:pb-10"
         onSubmit={handleSubmit(onSubmit)}
         role="dialog"
+        title="Tweet Modal"
+        aria-label="Tweet Modal"
       >
         <div className="flex items-center justify-between py-5">
           <Link
             href="/"
             role="button"
             className="rounded-full p-2 text-2xl text-white transition-all hover:bg-zinc-700"
+            title="Close Modal"
+            aria-label="Close Modal"
           >
             <FiX size={18} />
           </Link>
-          <Button size="md" type="submit" disabled={isBtnDisabled}>
+          <Button size="md" type="submit" disabled={isBtnDisabled} aria-label="Tweet Button">
             {tweet ? "Update" : "Tweet"}
           </Button>
         </div>
@@ -151,6 +155,8 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
       <Link
         href="/"
         className="absolute top-0 h-screen w-full cursor-default bg-white bg-opacity-20"
+        title="Close Modal"
+        aria-label="Close Modal"
       />
     </div>
   );
