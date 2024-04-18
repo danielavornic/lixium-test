@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Div100vh from "react-div-100vh";
 import { FiHome, FiSearch } from "react-icons/fi";
 import { FiFeather } from "react-icons/fi";
 
@@ -15,7 +16,7 @@ export const Sidebar = () => {
   const { pathname } = useRouter();
 
   return (
-    <aside className="fixed top-0 flex h-screen w-16 flex-col items-center justify-between bg-zinc-950 py-4 text-white lg:w-[250px] lg:items-start">
+    <Div100vh className="fixed top-0 flex w-16 flex-col items-center justify-between bg-zinc-950 py-4 text-white lg:w-[250px] lg:items-start">
       <div className="flex w-full flex-col items-center lg:items-start lg:px-2">
         <Link href="/">
           <img src="/logo.svg" alt="Logo" className="h-8 w-8 lg:ml-3" />
@@ -61,6 +62,6 @@ export const Sidebar = () => {
           <p className="text-sm text-gray-300">@voodoodeedoo</p>
         </div>
       </div>
-    </aside>
+    </Div100vh>
   );
 };
