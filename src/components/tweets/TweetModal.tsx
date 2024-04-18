@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FiX } from "react-icons/fi";
 import TextareaAutosize from "react-textarea-autosize";
 
@@ -11,6 +12,10 @@ import { Button } from "@/components/common";
 
 type TweetFormData = {
   content: string;
+};
+
+const onError = () => {
+  toast.error("Failed to tweet. Please try again later.");
 };
 
 export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
@@ -22,12 +27,20 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
+    setFocus
   } = useForm<TweetFormData>({
     mode: "onChange"
   });
 
-  const { data: tweet } = useQuery({
+  const contentValue = watch("content");
+
+  const {
+    data: tweet,
+    isLoading: isTweetLoading,
+    isFetching: isTweetFetching,
+    isError: isTweetError
+  } = useQuery({
     queryKey: ["tweets", tweetId],
     queryFn: () => tweetsApi.getTweet(tweetId as string),
     enabled: !!tweetId
@@ -36,24 +49,27 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["tweets"] });
     router.push("/");
+    toast.success(tweetId ? "Tweet updated successfully!" : "Tweeted successfully!");
   };
 
-  const { mutate: postTweet } = useMutation({
+  const { mutate: postTweet, isPending: isPostingPending } = useMutation({
     mutationFn: (data: TweetFormData) =>
       tweetsApi.createTweet({
         author: "oomf",
         content: data.content
       }),
-    onSuccess
+    onSuccess,
+    onError
   });
 
-  const { mutate: updateTweet } = useMutation({
+  const { mutate: updateTweet, isPending: isUpdatingPending } = useMutation({
     mutationFn: (data: TweetFormData) =>
       tweetsApi.updateTweet(tweetId as string, {
         author: "oomf",
         content: data.content
       }),
-    onSuccess
+    onSuccess,
+    onError
   });
 
   const onSubmit = (data: TweetFormData) => {
@@ -64,9 +80,28 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
     }
   };
 
+  const isBtnDisabled =
+    !!errors.content ||
+    isPostingPending ||
+    isUpdatingPending ||
+    isTweetLoading ||
+    isTweetFetching ||
+    tweet?.content === contentValue;
+
   useEffect(() => {
-    if (tweet) setValue("content", tweet.content);
-  }, [tweet, setValue]);
+    if (tweet) {
+      setValue("content", tweet.content);
+    }
+    // If it is a new tweet or the tweet is already fetched, focusnv
+    if (!tweetId || (!isTweetLoading && !isTweetFetching)) {
+      setFocus("content");
+    }
+  }, [tweet, setValue, setFocus, tweetId, isTweetLoading, isTweetFetching]);
+
+  if (isTweetError) {
+    toast.error("Failed to fetch tweet. Please try again later.");
+    router.push("/");
+  }
 
   return (
     <div className="fixed bottom-0 left-0 right-0 top-0 z-20 h-screen w-full">
@@ -83,13 +118,15 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
           >
             <FiX size={18} />
           </Link>
-          <Button size="md" type="submit" disabled={!watch("content") || !!errors.content}>
+          <Button size="md" type="submit" disabled={isBtnDisabled}>
             {tweet ? "Update" : "Tweet"}
           </Button>
         </div>
 
         <div className="flex space-x-4">
-          {tweet ? (
+          {isTweetLoading || isTweetFetching ? (
+            <div className="block h-10 min-w-10 animate-pulse rounded-full bg-blue-300" />
+          ) : tweet ? (
             <div
               className="flex h-10 min-w-10 items-center justify-center space-x-2 rounded-full bg-blue-300 font-semibold"
               title={tweet.author}
