@@ -80,7 +80,7 @@ export const TweetCard = ({ tweet }: { tweet: Tweet }) => {
   return (
     <div className="relative flex w-full space-x-4 rounded-lg border border-zinc-700 bg-transparent px-2 py-3">
       <div
-        className="flex h-10 min-w-10 items-center justify-center space-x-2 rounded-full bg-blue-300 font-semibold"
+        className="flex h-10 min-w-10 items-center justify-center space-x-2 rounded-full bg-pink-300 font-semibold"
         title={author}
       >
         {author[0].toUpperCase()}
@@ -100,9 +100,9 @@ export const TweetCard = ({ tweet }: { tweet: Tweet }) => {
             <button
               onClick={toggleMenu}
               aria-label="Tweet actions"
-              className="rouned-full group flex h-8 min-w-8 items-center justify-center rounded-full transition-all hover:bg-blue-400 hover:bg-opacity-20"
+              className="rouned-full group flex h-8 min-w-8 items-center justify-center rounded-full transition-all hover:bg-pink-400 hover:bg-opacity-20"
             >
-              <BsThreeDots size={20} className="transition-all group-hover:text-blue-500" />
+              <BsThreeDots size={20} className="transition-all group-hover:text-pink-500" />
             </button>
             <TweetActionsMenu
               menuState={menuState}

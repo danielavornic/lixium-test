@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Div100vh from "react-div-100vh";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FiX } from "react-icons/fi";
@@ -104,7 +105,7 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 top-0 z-20 h-screen w-full">
+    <Div100vh react-div-100vh className="fixed bottom-0 left-0 right-0 top-0 z-20 h-screen w-full">
       <form
         className="relative z-20 mx-auto h-screen w-full bg-zinc-950 px-4 md:mt-[4%] md:h-auto md:max-h-[80vh] md:min-h-[300px] md:max-w-[600px] md:rounded-xl md:pb-10"
         onSubmit={handleSubmit(onSubmit)}
@@ -129,10 +130,10 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
 
         <div className="flex space-x-4">
           {isTweetLoading || isTweetFetching ? (
-            <div className="block h-10 min-w-10 animate-pulse rounded-full bg-blue-300" />
+            <div className="block h-10 min-w-10 animate-pulse rounded-full bg-pink-300" />
           ) : tweet ? (
             <div
-              className="flex h-10 min-w-10 items-center justify-center space-x-2 rounded-full bg-blue-300 font-semibold"
+              className="flex h-10 min-w-10 items-center justify-center space-x-2 rounded-full bg-pink-300 font-semibold"
               title={tweet.author}
             >
               {tweet.author[0].toUpperCase()}
@@ -158,6 +159,6 @@ export const TweetModal = ({ tweetId }: { tweetId?: string }) => {
         title="Close Modal"
         aria-label="Close Modal"
       />
-    </div>
+    </Div100vh>
   );
 };

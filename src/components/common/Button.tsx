@@ -18,7 +18,7 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const btnClassNames = clsx(
-    "transition-all duration-500 cursor-pointer text-center rounded-full flex bg-blue-500 text-white hover:bg-blue-600 items-center justify-center font-medium text-sm md:text-base",
+    "transition-all duration-500 cursor-pointer text-center rounded-full flex bg-pink-500 text-white hover:bg-pink-600 items-center justify-center font-medium text-sm md:text-base",
     {
       "px-4 h-8": size === "md",
       "px-6 h-12": size === "lg",
