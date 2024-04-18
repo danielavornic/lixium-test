@@ -6,8 +6,8 @@ export const Spinner = () => {
       visible={true}
       height="60"
       width="60"
-      color="#3b82f6"
-      secondaryColor="#93c5fd"
+      color="#ec4899"
+      secondaryColor="#f472b6"
       wrapperClass="justify-center"
     />
   );
