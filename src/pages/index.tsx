@@ -7,7 +7,7 @@ import { TweetCard } from "@/components/tweets";
 import { Tweet } from "@/types";
 
 export default function Home() {
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading, isFetching, isError } = useQuery({
     queryKey: ["tweets"],
     queryFn: tweetsApi.getTweets,
     staleTime: 1000
@@ -20,6 +20,8 @@ export default function Home() {
       <section className="mt-8 space-y-4">
         {isLoading || isFetching ? (
           <Spinner />
+        ) : isError ? (
+          <p>Failed to load tweets. Try again.</p>
         ) : (
           data?.map((tweet: Tweet) => <TweetCard key={tweet.id} tweet={tweet} />)
         )}
